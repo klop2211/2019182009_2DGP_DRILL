@@ -1,14 +1,14 @@
 import game_framework
 import Camera
+import Map_object
 from pico2d import *
 
-back_ground = None
 camera = None
-
+map = None
 
 def enter():
-    global back_ground, camera
-    back_ground = load_image('./Resource\ice_tile\BGLayer_0 #218364.png')
+    global map, camera
+    map = Map_object.Map()
     camera = Camera.Camera()
 
 def update():
@@ -16,7 +16,7 @@ def update():
 
 def draw():
     clear_canvas()
-    back_ground.clip_draw(0, 0, back_ground.w, back_ground.h, camera.x, camera.y, 1000, 800)
+    map.draw(camera.x, camera.y)
     update_canvas()
     pass
 
