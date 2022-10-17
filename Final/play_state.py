@@ -1,18 +1,22 @@
 import game_framework
+import Camera
 from pico2d import *
 
 back_ground = None
+camera = None
+
 
 def enter():
-    global back_ground
+    global back_ground, camera
     back_ground = load_image('./Resource\ice_tile\BGLayer_0 #218364.png')
+    camera = Camera.Camera()
 
 def update():
     pass
 
 def draw():
     clear_canvas()
-    back_ground.draw(400,300)
+    back_ground.clip_draw(0, 0, back_ground.w, back_ground.h, camera.x, camera.y, 1000, 800)
     update_canvas()
     pass
 
@@ -21,6 +25,17 @@ def handle_events():
     for event in events:
         if event.type == SDL_QUIT:
             game_framework.quit()
+        elif event.type == SDL_KEYDOWN:
+            match event.key:
+                case pico2d.SDLK_UP:
+                    camera.move(0, 50)
+                case pico2d.SDLK_DOWN:
+                    camera.move(0, -50)
+                case pico2d.SDLK_LEFT:
+                    camera.move(-50, 0)
+                case pico2d.SDLK_RIGHT:
+                    camera.move(50, 0)
+
 
 def exit():
     pass
