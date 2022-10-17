@@ -71,6 +71,19 @@ class Map:
                         if dy == 13 * 40:
                             self.bot_left.clip_draw(0, 0, self.bot_left.w, self.bot_left.h, x + 20 + self.width - 40, y + 20 + dy,
                                                 40, 40)
+                    case 2:
+                        if dy < 10 * 40:
+                            self.left.clip_draw(0, 0, self.left.w, self.left.h, x + 20 + self.width - 40, y + 20 + dy,
+                                                40, 40)
+                        if dy == 10 * 40:
+                            self.top_left.clip_draw(0, 0, self.top_left.w, self.top_left.h, x + 20 + self.width - 40,
+                                                    y + 20 + dy, 40, 40)
+                        if dy > 15 * 40:
+                            self.left.clip_draw(0, 0, self.left.w, self.left.h, x + 20 + self.width - 40, y + 20 + dy,
+                                                40, 40)
+                        if dy == 15 * 40:
+                            self.bot_left.clip_draw(0, 0, self.bot_left.w, self.bot_left.h, x + 20 + self.width - 40,
+                                                    y + 20 + dy, 40, 40)
         # 위, 아래 벽
         for dx in range(0, self.width, 40):
             # 아래
