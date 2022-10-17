@@ -5,19 +5,25 @@ class Map:
     def __init__(self):
         self.width = 1200
         self.height = 800
-        self.under = load_image('./Resource\ice_tile\Ice_H_Type2_4.png')
-        self.left = load_image('./Resource\ice_tile\Ice_H_Type2_3.png')
-        self.right = load_image('./Resource\ice_tile\Ice_H_Type2_5.png')
+        # 상하좌우 기본 이미지 및 내부 이미지
         self.top = load_image('./Resource\ice_tile\Ice_H_Type2_1.png')
+        self.left = load_image('./Resource\ice_tile\Ice_H_Type2_3.png')
+        self.under = load_image('./Resource\ice_tile\Ice_H_Type2_4.png')
+        self.right = load_image('./Resource\ice_tile\Ice_H_Type2_5.png')
+        self.bottom = load_image('./Resource\ice_tile\Ice_H_Type2_7.png')
+        # 각종 코너 이미지
+        self.bot_right = load_image('./Resource\ice_tile\Ice_H_Type2_8.png')
         self.top_left_corner = load_image('./Resource\ice_tile\Ice_H_Type2_9.png')
         self.top_right_corner = load_image('./Resource\ice_tile\Ice_H_Type2_10.png')
-        self.bottom = load_image('./Resource\ice_tile\Ice_H_Type2_7.png')
-        self.bot_right = load_image('./Resource\ice_tile\Ice_H_Type2_8.png')
+        self.bot_left_corner = load_image('./Resource\ice_tile\Ice_H_Type2_11.png')
         self.bot_right_corner = load_image('./Resource\ice_tile\Ice_H_Type2_12.png')
         self.back_ground = load_image('./Resource\ice_tile\BGLayer_0 #218364.png')
+        # 발판 이미지
         self.block_left = load_image('./Resource\ice_tile\Ice_OnewayL.png')
         self.block_mid = load_image('./Resource\ice_tile\Ice_OnewayM.png')
         self.block_right = load_image('./Resource\ice_tile\Ice_OnewayR.png')
+        # 0 : enter, 1 : lock, 2 : clear
+        self.state = 1
         self.map_num = 3
         # 블럭의 위치를 x1, x2, y 순으로 가진 리스트, map_num를 통해 맵을 변경 1/40으로 축소 되있음
         self.block_info = [((5, 9, 4), (10, 14, 7), (7, 11, 11), (11, 15, 15), (16, 18, 12), (19, 21, 10), (21, 25, 7)),
@@ -31,10 +37,15 @@ class Map:
         # 왼쪽, 오른쪽 벽
         for dy in range(0, self.height, 40):
             # 왼쪽
-            if dy >= 280:
+            if self.state == 0:
+                if dy >= 280:
+                    self.right.clip_draw(0, 0, self.right.w, self.right.h, x + 20, y + 20 + dy, 40, 40)
+                if dy == 240:
+                    self.bot_right.clip_draw(0, 0, self.bot_right.w, self.bot_right.h, x + 20, y + 20 + dy, 40, 40)
+            elif self.state == 1:
                 self.right.clip_draw(0, 0, self.right.w, self.right.h, x + 20, y + 20 + dy, 40, 40)
-            if dy == 240:
-                self.bot_right.clip_draw(0, 0, self.bot_right.w, self.bot_right.h, x + 20, y + 20 + dy, 40, 40)
+
+
             # 오른쪽
             self.left.clip_draw(0, 0, self.left.w, self.left.h, x + 20 + self.width - 40, y + 20 + dy, 40, 40)
         # 위, 아래 벽
@@ -44,6 +55,10 @@ class Map:
             self.under.clip_draw(0, 0, self.under.w, self.under.h, x + 20 + dx, y + 20, 40, 40)
             if dx == self.width - 40:
                 self.bot_right_corner.clip_draw(0, 0, self.bot_right_corner.w, self.bot_right_corner.h, x + 20 + dx, y + 60, 40, 40)
+            if self.state == 1:
+                if dx == 0:
+                    self.bot_left_corner.clip_draw(0, 0, self.bot_left_corner.w, self.bot_left_corner.h, x + 20 + dx,
+                                               y + 60, 40, 40)
             # 위
             self.bottom.clip_draw(0, 0, self.bottom.w, self.bottom.h, x + 20 + dx, y + 20 + self.height - 80, 40, 40)
             self.under.clip_draw(0, 0, self.under.w, self.under.h, x + 20 + dx, y + 20 + self.height - 40, 40, 40)
