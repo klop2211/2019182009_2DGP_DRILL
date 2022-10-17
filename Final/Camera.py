@@ -5,8 +5,8 @@ class Camera:
 
     def move(self, dx, dy):
         self.x -= dx
-        if self.x <= -200:
-            self.x = -200
+        if self.x <= -400:
+            self.x = -400
         elif self.x >= 0:
             self.x = 0
         self.y -= dy
