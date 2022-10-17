@@ -12,6 +12,8 @@ class Map:
         self.right = load_image('./Resource\ice_tile\Ice_H_Type2_5.png')
         self.bottom = load_image('./Resource\ice_tile\Ice_H_Type2_7.png')
         # 각종 코너 이미지
+        self.top_left = load_image('./Resource\ice_tile\Ice_H_Type2_0.png')
+        self.bot_left = load_image('./Resource\ice_tile\Ice_H_Type2_6.png')
         self.bot_right = load_image('./Resource\ice_tile\Ice_H_Type2_8.png')
         self.top_left_corner = load_image('./Resource\ice_tile\Ice_H_Type2_9.png')
         self.top_right_corner = load_image('./Resource\ice_tile\Ice_H_Type2_10.png')
@@ -23,7 +25,7 @@ class Map:
         self.block_mid = load_image('./Resource\ice_tile\Ice_OnewayM.png')
         self.block_right = load_image('./Resource\ice_tile\Ice_OnewayR.png')
         # 0 : enter, 1 : lock, 2 : clear
-        self.state = 1
+        self.state = 2
         self.map_num = 3
         # 블럭의 위치를 x1, x2, y 순으로 가진 리스트, map_num를 통해 맵을 변경 1/40으로 축소 되있음
         self.block_info = [((5, 9, 4), (10, 14, 7), (7, 11, 11), (11, 15, 15), (16, 18, 12), (19, 21, 10), (21, 25, 7)),
@@ -37,17 +39,38 @@ class Map:
         # 왼쪽, 오른쪽 벽
         for dy in range(0, self.height, 40):
             # 왼쪽
-            if self.state == 0:
+            if self.state == 0 or self.state == 2:
                 if dy >= 280:
                     self.right.clip_draw(0, 0, self.right.w, self.right.h, x + 20, y + 20 + dy, 40, 40)
                 if dy == 240:
                     self.bot_right.clip_draw(0, 0, self.bot_right.w, self.bot_right.h, x + 20, y + 20 + dy, 40, 40)
             elif self.state == 1:
                 self.right.clip_draw(0, 0, self.right.w, self.right.h, x + 20, y + 20 + dy, 40, 40)
-
-
             # 오른쪽
-            self.left.clip_draw(0, 0, self.left.w, self.left.h, x + 20 + self.width - 40, y + 20 + dy, 40, 40)
+            if self.state == 0 or self.state == 1:
+                self.left.clip_draw(0, 0, self.left.w, self.left.h, x + 20 + self.width - 40, y + 20 + dy, 40, 40)
+            elif self.state == 2:
+                match self.map_num:
+                    case 0:
+                        if dy > 6 * 40:
+                            self.left.clip_draw(0, 0, self.left.w, self.left.h, x + 20 + self.width - 40, y + 20 + dy,
+                                                40, 40)
+                        if dy == 6 * 40:
+                            self.bot_left.clip_draw(0, 0, self.bot_left.w, self.bot_left.h, x + 20 + self.width - 40, y + 20 + dy,
+                                                40, 40)
+                    case 1:
+                        if dy < 8 * 40:
+                            self.left.clip_draw(0, 0, self.left.w, self.left.h, x + 20 + self.width - 40, y + 20 + dy,
+                                                40, 40)
+                        if dy == 8 * 40:
+                            self.top_left.clip_draw(0, 0, self.top_left.w, self.top_left.h, x + 20 + self.width - 40, y + 20 + dy,
+                                                40, 40)
+                        if dy > 13 * 40:
+                            self.left.clip_draw(0, 0, self.left.w, self.left.h, x + 20 + self.width - 40, y + 20 + dy,
+                                                40, 40)
+                        if dy == 13 * 40:
+                            self.bot_left.clip_draw(0, 0, self.bot_left.w, self.bot_left.h, x + 20 + self.width - 40, y + 20 + dy,
+                                                40, 40)
         # 위, 아래 벽
         for dx in range(0, self.width, 40):
             # 아래
@@ -59,6 +82,11 @@ class Map:
                 if dx == 0:
                     self.bot_left_corner.clip_draw(0, 0, self.bot_left_corner.w, self.bot_left_corner.h, x + 20 + dx,
                                                y + 60, 40, 40)
+            if self.state == 2:
+                match self.map_num:
+                    case 0:
+                        if dx == 29 * 40:
+                            self.top.clip_draw(0, 0, self.top.w, self.top.h, x + 20 + dx, y + 60, 40, 40)
             # 위
             self.bottom.clip_draw(0, 0, self.bottom.w, self.bottom.h, x + 20 + dx, y + 20 + self.height - 80, 40, 40)
             self.under.clip_draw(0, 0, self.under.w, self.under.h, x + 20 + dx, y + 20 + self.height - 40, 40, 40)
