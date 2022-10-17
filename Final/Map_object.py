@@ -18,9 +18,11 @@ class Map:
         self.block_left = load_image('./Resource\ice_tile\Ice_OnewayL.png')
         self.block_mid = load_image('./Resource\ice_tile\Ice_OnewayM.png')
         self.block_right = load_image('./Resource\ice_tile\Ice_OnewayR.png')
-        self.map_num = 0
+        self.map_num = 1
         # 블럭의 위치를 x1, x2, y 순으로 가진 리스트, map_num를 통해 맵을 변경 1/40으로 축소 되있음
-        self.block_info = [((5, 9, 4), (10, 14, 7), (7, 11, 11), (11, 15, 15), (16, 18, 12), (19, 21, 10), (21, 25, 7))]
+        self.block_info = [((5, 9, 4), (10, 14, 7), (7, 11, 11), (11, 15, 15), (16, 18, 12), (19, 21, 10), (21, 25, 7)),
+                           ((3, 4, 9), (5, 9, 12), (7, 11, 8), (9, 12, 15), (12, 16, 4), (14, 17, 10), (16, 20, 7), (18, 21, 13), (23, 26, 10)),
+                           ((4, 7, 4), (5, 8, 7), (3, 6, 10), (6, 9, 13))]
 
     def draw(self, x, y):
         self.back_ground.clip_draw(0, 0, self.back_ground.w, self.back_ground.h,
@@ -49,11 +51,11 @@ class Map:
             if dx == self.width - 40:
                 self.top_right_corner.clip_draw(0, 0, self.top_right_corner.w, self.top_right_corner.h, x + 20 + dx, y + 20 + self.height - 80, 40, 40)
         for num in self.block_info[self.map_num]:
-            for i in range(num[0], num[1]):
+            for i in range(num[0], num[1] + 1):
                 if i == num[0]:
                     self.block_left.clip_draw(0, 0, self.block_left.w, self.block_left.h, x + i * 40 + 20,
                                              y + num[2] * 40 + 20, 40, 40)
-                elif i == num[1] - 1:
+                elif i == num[1]:
                     self.block_right.clip_draw(0, 0, self.block_right.w, self.block_right.h, x + i * 40 + 20,
                                               y + num[2] * 40 + 20, 40, 40)
                 else:
