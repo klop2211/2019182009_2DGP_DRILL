@@ -18,7 +18,7 @@ class Hero:
         self.status = {'speed': 10, 'jump': 5}
         # 오른쪽 : 1, 왼쪽 : -1
         self.dir = 1
-        self.state = {'run': True, 'jump': False, 'dash': False, 'die': False}
+        self.state = {'run': False, 'jump': 0, 'dash': False, 'die': False}
 
     def draw(self):
         # # dash
@@ -58,6 +58,9 @@ class Hero:
 
     def update(self):
         delay(0.05)
+        # 중력
+        self.y -= 10
+        # 좌우 이동
         if self.state['run']:
             self.x += self.status['speed'] * self.dir
 

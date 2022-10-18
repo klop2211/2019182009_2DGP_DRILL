@@ -17,8 +17,38 @@ def enter():
     minimap = UI_object.Minimap()
     hero = Hero_object.Hero()
 
+# 두점을 선분이 양분 하는지
+def is_divide_pt(x11,y11, x12,y12, x21,y21, x22,y22):
+    f1 = (x12-x11)*(y21-y11) - (y12-y11)*(x21-x11)
+    f2 = (x12-x11)*(y22-y11) - (y12-y11)*(x22-x11)
+    if f1*f2 < 0:
+        return True
+    else:
+        return False
+# 두선분이 교차하는지
+def is_cross_pt(x11, y11, x12,y12, x21,y21, x22,y22):
+    b1 = is_divide_pt(x11, y11, x12, y12, x21, y21, x22, y22)
+    b2 = is_divide_pt(x21, y21, x22, y22, x11, y11, x12, y12)
+    if b1 and b2:
+        return True
+    return False
+
+def collision_hero_map():
+    # 발판의 top 선분 정보
+    bottoms = [(i[0] * 40, (i[1] + 1) * 40, i[2] * 40 + 40) for i in map.block_info[map.map_num]]
+    # 바닥
+    bottoms.append((0, 1200, 80))
+    for i in bottoms:
+        if is_cross_pt(hero.x, hero.y + 40, hero.x + 40, hero.y - 5, i[0], i[2], i[1], i[2]):
+            hero.y = i[2]
+            return
+        if is_cross_pt(hero.x + 40, hero.y + 40, hero.x, hero.y - 5, i[0], i[2], i[1], i[2]):
+            hero.y = i[2]
+            return
+
 def update():
     hero.update()
+    collision_hero_map()
     pass
 
 def draw():
@@ -66,9 +96,11 @@ def handle_events():
             hero.frame = 0
             match event.key:
                 case pico2d.SDLK_a:
-                    hero.state['run'] = False
+                    if hero.dir == -1:
+                        hero.state['run'] = False
                 case pico2d.SDLK_d:
-                    hero.state['run'] = False
+                    if hero.dir == 1:
+                        hero.state['run'] = False
 
 
 
