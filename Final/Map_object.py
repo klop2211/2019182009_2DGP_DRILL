@@ -25,7 +25,7 @@ class Map:
         self.block_mid = load_image('./Resource\ice_tile\Ice_OnewayM.png')
         self.block_right = load_image('./Resource\ice_tile\Ice_OnewayR.png')
         # 0 : enter, 1 : lock, 2 : clear
-        self.state = 2
+        self.state = 0
         self.map_num = 3
         # 블럭의 위치를 x1, x2, y 순으로 가진 리스트, map_num를 통해 맵을 변경 1/40으로 축소 되있음
         self.block_info = [((5, 9, 4), (10, 14, 7), (7, 11, 11), (11, 15, 15), (16, 18, 12), (19, 21, 10), (21, 25, 7)),
@@ -107,6 +107,7 @@ class Map:
                 self.top_left_corner.clip_draw(0, 0, self.top_left_corner.w, self.top_left_corner.h, x + 20 + dx, y + 20 + self.height - 80, 40, 40)
             if dx == self.width - 40:
                 self.top_right_corner.clip_draw(0, 0, self.top_right_corner.w, self.top_right_corner.h, x + 20 + dx, y + 20 + self.height - 80, 40, 40)
+        # 맵 별로 블럭 그리기
         for num in self.block_info[self.map_num]:
             for i in range(num[0], num[1] + 1):
                 if i == num[0]:
