@@ -15,7 +15,7 @@ class Hero:
         self.y = 300
         self.frame = 0
         self.frames = {'run': 8, 'idle': 5}
-        self.status = {'speed': 5, 'jump': 5}
+        self.status = {'speed': 10, 'jump': 5}
         # 오른쪽 : 1, 왼쪽 : -1
         self.dir = 1
         self.state = {'run': True, 'jump': False, 'dash': False, 'die': False}
@@ -57,5 +57,7 @@ class Hero:
         return
 
     def update(self):
-        delay(0.11)
+        delay(0.05)
+        if self.state['run']:
+            self.x += self.status['speed'] * self.dir
 
