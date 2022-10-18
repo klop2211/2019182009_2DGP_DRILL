@@ -55,6 +55,22 @@ def handle_events():
                     map.map_num = 2
                 case pico2d.SDLK_4:
                     map.map_num = 3
+                # 주인공 좌우이동
+                case pico2d.SDLK_a:
+                    hero.dir = -1
+                    hero.state['run'] = True
+                case pico2d.SDLK_d:
+                    hero.dir = 1
+                    hero.state['run'] = True
+        elif event.type == SDL_KEYUP:
+            hero.frame = 0
+            match event.key:
+                case pico2d.SDLK_a:
+                    hero.state['run'] = False
+                case pico2d.SDLK_d:
+                    hero.state['run'] = False
+
+
 
 
 
