@@ -56,7 +56,7 @@ def draw():
     clear_canvas()
     map.draw(camera.x, camera.y)
     minimap.draw(map.map_num)
-    hero.draw()
+    hero.draw(camera.x, camera.y)
     update_canvas()
     pass
 

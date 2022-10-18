@@ -20,7 +20,7 @@ class Hero:
         self.dir = 1
         self.state = {'run': False, 'jump': 0, 'dash': False, 'die': False}
 
-    def draw(self):
+    def draw(self, x, y):
         # # dash
         # if self.state['dash']:
         #     frame_size = self.run_right.w // self.frames['run']
@@ -40,18 +40,18 @@ class Hero:
         if self.state['run']:
             frame_size = self.run_right.w // self.frames['run']
             if self.dir == 1:
-                self.run_right.clip_draw(frame_size * self.frame, 0, frame_size, self.run_right.h, self.x + 20, self.y + 20, 40, 40)
+                self.run_right.clip_draw(frame_size * self.frame, 0, frame_size, self.run_right.h, self.x + 20 + x, self.y + 20 + y, 40, 40)
             else:
-                self.run_left.clip_draw(frame_size * self.frame, 0, frame_size, self.run_left.h, self.x + 20, self.y + 20, 40, 40)
+                self.run_left.clip_draw(frame_size * self.frame, 0, frame_size, self.run_left.h, self.x + 20+ x, self.y + 20 + y, 40, 40)
             self.frame += 1
             self.frame %= self.frames['run']
             return
         # idle
         frame_size = self.idle_left.w // self.frames['idle']
         if self.dir == 1:
-            self.idle_right.clip_draw(frame_size * self.frame, 0, frame_size, self.idle_right.h, self.x + 20, self.y + 20, 40, 40)
+            self.idle_right.clip_draw(frame_size * self.frame, 0, frame_size, self.idle_right.h, self.x + 20+ x, self.y + 20 + y, 40, 40)
         else:
-            self.idle_left.clip_draw(frame_size * self.frame, 0, frame_size, self.idle_left.h, self.x + 20, self.y + 20, 40, 40)
+            self.idle_left.clip_draw(frame_size * self.frame, 0, frame_size, self.idle_left.h, self.x + 20+ x, self.y + 20 + y, 40, 40)
         self.frame += 1
         self.frame %= self.frames['idle']
         return
