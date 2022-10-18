@@ -54,7 +54,7 @@ def handle_events():
 
 
 def exit():
-    pass
+    del map, minimap, camera
 
 def pause():
     pass
