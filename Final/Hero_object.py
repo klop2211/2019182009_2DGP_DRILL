@@ -18,7 +18,7 @@ class Hero:
         self.status = {'speed': 5, 'jump': 5}
         # 오른쪽 : 1, 왼쪽 : -1
         self.dir = 1
-        self.state = {'run': False, 'jump': False, 'dash': False, 'die': False}
+        self.state = {'run': True, 'jump': False, 'dash': False, 'die': False}
 
     def draw(self):
         # # dash
@@ -36,16 +36,16 @@ class Hero:
         #     else:
         #         self.jump_left.clip_draw(0, 0, self.jump_left.w, self.jump_left.h, self.x + 20, self.y + 20, 40, 40)
         #     return
-        # # run
-        # if self.state['run']:
-        #     frame_size = self.run_right.w // self.frames['run']
-        #     if self.dir == 1:
-        #         self.run_right.clip_draw(frame_size * self.frame, 0, frame_size, self.run_right.h, self.x + 20, self.y + 20, 40, 40)
-        #     else:
-        #         self.run_left.clip_draw(frame_size * self.frame, 0, frame_size, self.run_left.h, self.x + 20, self.y + 20, 40, 40)
-        #     self.frame += 1
-        #     self.frame %= self.frames['run']
-        #     return
+        # run
+        if self.state['run']:
+            frame_size = self.run_right.w // self.frames['run']
+            if self.dir == 1:
+                self.run_right.clip_draw(frame_size * self.frame, 0, frame_size, self.run_right.h, self.x + 20, self.y + 20, 40, 40)
+            else:
+                self.run_left.clip_draw(frame_size * self.frame, 0, frame_size, self.run_left.h, self.x + 20, self.y + 20, 40, 40)
+            self.frame += 1
+            self.frame %= self.frames['run']
+            return
         # idle
         frame_size = self.idle_left.w // self.frames['idle']
         if self.dir == 1:
@@ -57,5 +57,5 @@ class Hero:
         return
 
     def update(self):
-        delay(0.13)
+        delay(0.11)
 
