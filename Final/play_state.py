@@ -2,19 +2,23 @@ import game_framework
 import Camera
 import Map_object
 import UI_object
+import Hero_object
 from pico2d import *
 
 camera = None
 map = None
 minimap = None
+hero = None
 
 def enter():
-    global map, camera, minimap
+    global map, camera, minimap, hero
     map = Map_object.Map()
     camera = Camera.Camera()
     minimap = UI_object.Minimap()
+    hero = Hero_object.Hero()
 
 def update():
+    hero.update()
     pass
 
 def draw():
@@ -22,6 +26,7 @@ def draw():
     clear_canvas()
     map.draw(camera.x, camera.y)
     minimap.draw(map.map_num)
+    hero.draw()
     update_canvas()
     pass
 
@@ -54,7 +59,7 @@ def handle_events():
 
 
 def exit():
-    del map, minimap, camera
+    pass
 
 def pause():
     pass
